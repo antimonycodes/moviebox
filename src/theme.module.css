@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* theme.module.css */
 
 .container {
@@ -9,27 +5,33 @@
 }
 
 .input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #c70404;
+  width: 30rem;
+  padding: 1px;
+  border: 1px solid black;
   border-radius: 4px;
+  color: black;
 }
 
 .suggestionsContainer {
   position: absolute;
-  top: 100%;
+  top: 120%;
   left: 0;
-  width: 100%;
-  border: 1px solid #ee1818;
-  background-color: #fff;
-  z-index: 1;
+  width: 30rem;
+  border: 1px solid black;
+  background-color: white;
+  /* z-index: 1; */
 }
 
 .suggestion {
   padding: 10px;
   cursor: pointer;
+  color: red;
 }
 
 .suggestionHighlighted {
   background-color: #ddd;
+}
+
+.searchbox{
+    
 }
