@@ -64,40 +64,42 @@ const List = () => {
           <p>See More</p>
         </div>
         <div className='grid grid-cols-4 gap-8 px-24 py-4'>
-          {responses.map((response, index) => (
-            <Link to={`/Details/${response?.id}`}>
-            <div key={index} className='relative'>
-              <img
-                src={`https://image.tmdb.org/t/p/original/${response.poster_path}`}
-                alt=''
-              />
-              <div className="absolute top-0 right-0 bg-[#6A8FB9] py-1 px-1 rounded-[50%] mr-1 mt-1">
-                <svg
-                  stroke="currentColor"
-                  fill={likedItems[index] ? '#BE123C' : '#f0f0f0'}
-                  strokeWidth="1.5"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  className="text-[#BE123C]"
-                  height="30"
-                  width="30"
-                  xmlns="http://www.w3.org/2000/svg"
-                  onClick={() => toggleLike(index)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                  ></path>
-                </svg>
-              </div>
-              <p className='py-1'>{response.release_date}</p>
-              <h1 className='text-1xl font-semibold'>{response.title}</h1>
-              <h3>{`${response.vote_average}/10`}</h3>
-            </div>
-            </Link>
-          ))}
+        {responses.map((response, index) => (
+  <div key={index} className='relative'>
+    <Link to={`/Details/${response?.id}`}>
+      <img
+        src={`https://image.tmdb.org/t/p/original/${response.poster_path}`}
+        alt=''
+      />
+      <p className='py-1'>{response.release_date}</p>
+      <h1 className='text-1xl font-semibold'>{response.title}</h1>
+      <h3>{`${response.vote_average}/10`}</h3>
+    </Link>
+    <div className="absolute top-0 right-0 bg-[#6A8FB9] py-1 px-1 rounded-[50%] mr-1 mt-1">
+      <svg
+        stroke="currentColor"
+        fill={likedItems[index] ? '#BE123C' : '#f0f0f0'}
+        strokeWidth="1.5"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        className="text-[#BE123C]"
+        height="30"
+        width="30"
+        xmlns="http://www.w3.org/2000/svg"
+        onClick={() => toggleLike(index)}
+        style={{ cursor: 'pointer' }}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+        ></path>
+      </svg>
+    </div>
+  </div>
+))}
+
+
         </div>
       </div>
       {popUpMessage && <PopUp message={popUpMessage} />}

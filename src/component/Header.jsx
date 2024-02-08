@@ -8,6 +8,7 @@ import axios from 'axios';
 const Header = () => {
   const [responses, setResponse] = useState([]);
   const [randomIndex, setRandomIndex] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const ratedTv = async () => {
     try {
@@ -41,7 +42,35 @@ const Header = () => {
   const title = responses[randomIndex]?.title || 'Default Title';
   const voteAverage = responses[randomIndex]?.vote_average || 'N/A';
   const overview = responses[randomIndex]?.overview || 'Default Overview';
-  //
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(
+        'https://api.themoviedb.org/3/search/movie',
+        {
+          params: { include_adult: 'false', language: 'en-US', page: '1', query: searchQuery, },
+          headers: {
+            accept: 'application/json',
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MTU5MTFlYmE5NmNlZmQyMGJjYmIyODFmMjRmNWE1YiIsInN1YiI6IjY1YmE0NWYwYjdkMzUyMDE4MDIyMTU3YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.59z62Zyer3M6lHut_eJjubi1wLNVm7rroHQ_fRuR8_s',
+          },
+        }
+      );
+  
+      console.log(response.data.results);
+      console.log(response.data.release_date);
+      console.log(response.data.results.map(result => result.title));
+
+  
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    handleSearch();
+  }, [searchQuery]);
+  
+  
   // const InputSpotlightBorder = () => {
   //   const divRef = useRef<HTMLInputElement>(null);
   //   const [isFocused, setIsFocused] = useState(false);
@@ -90,20 +119,23 @@ const Header = () => {
           <h1 className=' font-extrabold'>MovieBlog</h1>
         </div>
         <div className="searchbox w-full max-w-[50%] mx-auto flex items-center border px-4 py-3 rounded-lg">
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="What do you want to watch"
-            className="flex-grow border-none text-white bg-transparent placeholder:text-white focus:outline-none"
-          />
+        <input
+       type="text"
+       id="searchInput"
+       placeholder="What do you want to watch"
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+      className="flex-grow border-none text-white bg-transparent placeholder:text-white focus:outline-none"
+/>
           <label htmlFor="searchInput" className="sr-only">
             Search
           </label>
-          <button type="button" className="ml-2">
-            <FaSearch className="text-white" />
-          </button>
+          <button type="button" onClick={handleSearch} className="ml-2">
+  <FaSearch className="text-white" />
+</button>
+
         </div>
-        //
+        
         {/* <div className='relative w-full'>
         <input
           onMouseMove={handleMouseMove}
@@ -130,12 +162,10 @@ const Header = () => {
         />
       </div> */}
 
-        //
+        
         <div className="right flex items-center gap-4">
           <a className=' font-semibold' href='#'>Sign In</a>
-          {/* <div className=" bg-red-700 w-8 h-6 flex items-center justify-end">
-          <RxHamburgerMenu  />
-          </div> */}
+      
         <div className="bg-red-700 w-8 h-8 flex items-center justify-center rounded-full">
   <RxHamburgerMenu />
 </div>

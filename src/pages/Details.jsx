@@ -7,7 +7,7 @@ import axios from 'axios';
 const Details = () => {
   const { id } = useParams();
   const [response, setResponse] = useState({});
-  const [video, setVideo] = useState(null);  // Change 'id' to 'null'
+  const [video, setVideo] = useState(null);  
   
   const fetchMovieDetails = async () => {
     try {
@@ -17,7 +17,7 @@ const Details = () => {
           headers: {
             accept: 'application/json',
             Authorization:
-              'Bearer YOUR_API_KEY',
+            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MTU5MTFlYmE5NmNlZmQyMGJjYmIyODFmMjRmNWE1YiIsInN1YiI6IjY1YmE0NWYwYjdkMzUyMDE4MDIyMTU3YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.59z62Zyer3M6lHut_eJjubi1wLNVm7rroHQ_fRuR8_s',
           },
         }
       );
