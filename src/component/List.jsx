@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-// Simple PopUp component
 const PopUp = ({ message }) => (
   <div className="fixed top-[8px] left-1/2 transform -translate-x-1/2 bg-white p-4 rounded shadow-md z-50">
     {message}
   </div>
 );
 
-
 const List = () => {
+  // Load liked items from localStorage on component mount
+  const initialLikedItems = JSON.parse(localStorage.getItem('likedItems')) || {};
   const [responses, setResponse] = useState([]);
-  const [likedItems, setLikedItems] = useState({});
+  const [likedItems, setLikedItems] = useState(initialLikedItems);
   const [popUpMessage, setPopUpMessage] = useState('');
 
   const ratedTv = async () => {
@@ -36,6 +37,11 @@ const List = () => {
     ratedTv();
   }, []);
 
+  // Save liked items to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('likedItems', JSON.stringify(likedItems));
+  }, [likedItems]);
+
   const toggleLike = (index) => {
     const updatedLikedItems = { ...likedItems };
     updatedLikedItems[index] = !likedItems[index];
@@ -59,6 +65,7 @@ const List = () => {
         </div>
         <div className='grid grid-cols-4 gap-8 px-24 py-4'>
           {responses.map((response, index) => (
+            <Link to={`/Details/${response?.id}`}>
             <div key={index} className='relative'>
               <img
                 src={`https://image.tmdb.org/t/p/original/${response.poster_path}`}
@@ -89,6 +96,7 @@ const List = () => {
               <h1 className='text-1xl font-semibold'>{response.title}</h1>
               <h3>{`${response.vote_average}/10`}</h3>
             </div>
+            </Link>
           ))}
         </div>
       </div>
