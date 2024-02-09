@@ -100,7 +100,7 @@ const Details = () => {
           )}
         </div>
         {/*  */}
-        <div className=" flex gap-5 py-4 font-semibold text-2xl">
+        <div className=" flex gap-5 py-4 font-semibold text-xl sm:text-2xl">
           <h2>{response.title}</h2>
           <h2>{response.release_date}</h2>
           <h2>{response.runtime}</h2>
