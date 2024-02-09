@@ -80,13 +80,13 @@ const Details = () => {
     //   )}
     // </div>
     <div className=" w-full flex">
-      <div className=" hidden md:block basis-[20%] bg-blue-600 border-[1px] border-black border-solid rounded-r-3xl">
+      <div className=" hidden md:block basis-[20%] border-[1px] border-black border-solid rounded-r-3xl">
         <div className="logo flex items-center gap-2">
           <img src="/mlogo.png" alt="logo image" className="w-16 h-16" />
           <h1 className=" font-extrabold">MovieBlog</h1>
         </div>
       </div>
-      <div className=" basis-[100%] md:basis-[80%] bg-yellow-300 mx-4 my-4">
+      <div className=" basis-[100%] md:basis-[80%] mx-4 my-4">
         <div className=" w-full h-[30rem] ">
           {video && (
             <iframe
