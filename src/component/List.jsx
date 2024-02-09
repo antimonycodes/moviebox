@@ -63,12 +63,12 @@ const List = () => {
 
   return (
     <>
-      <div className="z-[-2] h-[100%] w-[100%] bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px] text-white">
-        <div className="flex items-center justify-between px-24 py-12 ">
+      <div className="z-[-2] h-[100%] w-[100%] bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px] text-white lg:px-24 px-3">
+        <div className="flex items-center justify-between   py-12 ">
           <h1 className="text-2xl font-bold">Featured Movie</h1>
           <p>See More</p>
         </div>
-        <div className="grid grid-cols-4 gap-8 px-24 py-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 ">
           {responses.map((response, index) => (
             <div key={index} className="relative">
               <Link to={`/Details/${response?.id}`}>

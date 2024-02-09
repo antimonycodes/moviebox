@@ -79,15 +79,15 @@ const Details = () => {
     //     ></iframe>
     //   )}
     // </div>
-    <div className=" w-full h-screen flex">
-      <div className=" basis-[20%] bg-blue-600 border-[1px] border-black border-solid rounded-r-3xl">
+    <div className=" w-full flex">
+      <div className=" hidden md:block basis-[20%] bg-blue-600 border-[1px] border-black border-solid rounded-r-3xl">
         <div className="logo flex items-center gap-2">
           <img src="/mlogo.png" alt="logo image" className="w-16 h-16" />
           <h1 className=" font-extrabold">MovieBlog</h1>
         </div>
       </div>
-      <div className=" basis-[80%] bg-yellow-300 mx-4 my-4">
-        <div className=" w-full h-[30rem]">
+      <div className=" basis-[100%] md:basis-[80%] bg-yellow-300 mx-4 my-4">
+        <div className=" w-full h-[30rem] ">
           {video && (
             <iframe
               title={video.name}
@@ -99,9 +99,45 @@ const Details = () => {
             ></iframe>
           )}
         </div>
-        <h2>{response.title}</h2>
-        {/* <h2>{response.data.published_at}</h2> */}
-        <h2>{response.release_date}</h2>
+        {/*  */}
+        <div className=" flex gap-5 py-4 font-semibold text-2xl">
+          <h2>{response.title}</h2>
+          <h2>{response.release_date}</h2>
+          <h2>{response.runtime}</h2>
+        </div>
+        {/*  */}
+        <div className=" flex flex-col sm:flex-row">
+          <div className=" w-full">
+            <h1>{response.overview}</h1>
+            {response.genres && response.genres.length > 0 && (
+              <div className=" py-4">
+                <h1>
+                  <span className="font-bold text-lg">Genre:</span>{" "}
+                  {response.genres.map((genre) => genre.name).join(", ")}
+                </h1>
+              </div>
+            )}
+          </div>
+          {/*  */}
+          <div class=" w-full sm:w-[50%] px-4">
+            <div>
+              <a
+                class="border border-[#BE123C] bg-[#BE123C] py-2 rounded-md text-white flex justify-center items-center"
+                href="#"
+              >
+                See Showtimes
+              </a>
+            </div>
+            <div class="mt-1">
+              <a
+                class="bg-[#BE123C] border border-[#BE123C] py-2 rounded-md flex justify-center items-center"
+                href="#"
+              >
+                More Watch Options
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

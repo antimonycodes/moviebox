@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Autosuggest from "react-autosuggest";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { FaSearch } from "react-icons/fa";
 import { AiTwotonePlayCircle } from "react-icons/ai";
 import axios from "axios";
 import "../index.css";
@@ -81,9 +80,13 @@ const Header = () => {
 
   const renderSuggestion = (suggestion) => (
     <div>
-      <h1>{suggestion.title.toUpperCase()}</h1>
+      <h1 className=" pb-3">{suggestion.title.toUpperCase()}</h1>
 
-      <img src={suggestion.posterPath} alt="Poster" className="w-8 h-8" />
+      <img
+        src={suggestion.posterPath}
+        alt="Poster"
+        className="w-16 h-16 pb-3"
+      />
       <h1> Release Date: {suggestion.date}</h1>
 
       <hr className="bg-black" />
@@ -99,7 +102,7 @@ const Header = () => {
   };
 
   const inputProps = {
-    placeholder: "What do you want to watch",
+    placeholder: "What do you want to watch?",
     value: searchQuery,
     onChange: (event, { newValue }) => setSearchQuery(newValue),
   };
@@ -107,19 +110,19 @@ const Header = () => {
   return (
     <>
       <div
-        className="header h-screen w-full relative bg-cover px-24"
+        className="header h-fit w-full relative bg-cover px-6 lg:px-24"
         style={{ backgroundImage: `url(${backgroundUrl})` }}
       >
         {/* Gradient overlay */}
         <div className="gradient-overlay absolute inset-0 bg-gradient-to-tr from-black to-transparent"></div>
 
-        <nav className="py-4 flex items-center justify-between relative z-20 text-white">
-          <div className="logo flex items-center gap-2">
+        <nav className="py-4 flex items-center gap-4 justify-between relative z-20 text-white">
+          <div className=" hidden sm:flex items-center gap-2">
             <img src="/mlogo.png" alt="logo image" className="w-16 h-16" />
-            <h1 className=" font-extrabold">MovieBlog</h1>
+            <h1 className="font-extrabold">MovieBlog</h1>
           </div>
 
-          <div>
+          <div className="search-container">
             <Autosuggest
               suggestions={suggestions}
               onSuggestionsFetchRequested={onSuggestionsFetchRequested}
@@ -132,7 +135,7 @@ const Header = () => {
           </div>
 
           <div className="right flex items-center gap-4">
-            <a className=" font-semibold" href="#">
+            <a className="font-semibold hidden lg:flex" href="#">
               Sign In
             </a>
 
@@ -141,7 +144,8 @@ const Header = () => {
             </div>
           </div>
         </nav>
-        <div className="hero pt-32 text-white relative z-10 w-1/3">
+
+        <div className=" py-28 w-full sm:w-[30rem] text-white relative z-10 ">
           <h1 className="text-3xl font-bold pb-2">{title}</h1>
           <h2 className=" pb-2">{`${voteAverage}/10`}</h2>
           <p className=" pb-2">{overview}</p>
