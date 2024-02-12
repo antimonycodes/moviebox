@@ -72,10 +72,13 @@ const List = () => {
           {responses.map((response, index) => (
             <div key={index} className="relative">
               <Link to={`/Details/${response?.id}`}>
-                <img
-                  src={`https://image.tmdb.org/t/p/original/${response.poster_path}`}
-                  alt=""
-                />
+                <div className=" h-96 w-full bg-gray-600 px-4 py-4">
+                  <img
+                    src={`https://image.tmdb.org/t/p/original/${response.poster_path}`}
+                    alt=""
+                    className=" h-[100%] w-full object-cover object-center"
+                  />
+                </div>
               </Link>
               <p className="py-1">{response.release_date}</p>
               <h1 className="text-1xl font-semibold">{response.title}</h1>

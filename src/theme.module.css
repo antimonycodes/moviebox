@@ -1,32 +1,50 @@
 /* theme.module.css */
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 
 .container {
   position: relative;
+  /* background-color: red; */
+  /* width: 100%; */
+  /* flex-basis: 10%; */
+
 }
 
 .input {
-  max-width: 20rem;
+  width: 35rem;
   padding: 1px;
   border: 2px solid white;
   border-radius: 4px;
   background: transparent;
   font-weight: bolder;
 }
-/* @media(max-width:640px){
-  .input,.suggestionsContainer{
-    width: 10rem;
+
+
+
+@media(max-width:890px){
+  .input{
+    width: 30rem;
+  }
+} 
+
+@media(max-width:500px){
+.input{
+  width: 18rem;
+ 
+}}
+ @media(max-width:426px){
+  .input{
+    width: 15rem;
   }
 }
-@media(min-width:500px){
-.input{
-  width: 10rem;
-  flex-shrink: 1;
-}}
-@media(max-width:745px){
-  .input,.suggestionsContainer{
-    width: 25rem;
+ @media(max-width:370px){
+  .input{
+    width: 13rem;
   }
-} */
+}
 
 
 .suggestionsContainer {
