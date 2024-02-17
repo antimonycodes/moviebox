@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
-import Autosuggest from "react-autosuggest";
+// import Autosuggest from "react-autosuggest";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { AiTwotonePlayCircle } from "react-icons/ai";
 import axios from "axios";
 // import { useHistory } from "react-router-dom";
 import "../index.css";
 import styles from "../theme.module.css";
+import { Link } from "react-router-dom";
+import SearchBar from "./SearchBar";
+import SearchResultList from "./SearchResultList";
 
 const Header = () => {
   const [responses, setResponse] = useState([]);
   const [randomIndex, setRandomIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
+  // const [suggestions, setSuggestions] = useState([]);
   // const history = useHistory(); // Initialize useHistory
 
   const ratedTv = async () => {
@@ -47,69 +50,73 @@ const Header = () => {
   const voteAverage = responses[randomIndex]?.vote_average || "N/A";
   const overview = responses[randomIndex]?.overview || "Default Overview";
 
-  const fetchSuggestions = async (value) => {
-    try {
-      const response = await axios.get(
-        "https://api.themoviedb.org/3/search/movie",
-        {
-          params: {
-            include_adult: "false",
-            language: "en-US",
-            page: "1",
-            query: value,
-          },
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MTU5MTFlYmE5NmNlZmQyMGJjYmIyODFmMjRmNWE1YiIsInN1YiI6IjY1YmE0NWYwYjdkMzUyMDE4MDIyMTU3YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.59z62Zyer3M6lHut_eJjubi1wLNVm7rroHQ_fRuR8_s",
-          },
-        }
-      );
-      console.log(response.data.results);
-      setSuggestions(
-        response.data.results.map((result) => ({
-          title: result.title,
-          posterPath: `https://image.tmdb.org/t/p/w200${result.poster_path}`,
-          date: result.release_date,
-          id: result.id, // Include movie ID in suggestions
-        }))
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const fetchSuggestions = async (value) => {
+  //   try {
+  //     const response = await axios.get(
+  //       "https://api.themoviedb.org/3/search/movie",
+  //       {
+  //         params: {
+  //           include_adult: "false",
+  //           language: "en-US",
+  //           page: "1",
+  //           query: value,
+  //         },
+  //         headers: {
+  //           accept: "application/json",
+  //           Authorization:
+  //             "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MTU5MTFlYmE5NmNlZmQyMGJjYmIyODFmMjRmNWE1YiIsInN1YiI6IjY1YmE0NWYwYjdkMzUyMDE4MDIyMTU3YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.59z62Zyer3M6lHut_eJjubi1wLNVm7rroHQ_fRuR8_s",
+  //         },
+  //       }
+  //     );
+  //     console.log(response.data.results);
+  //     setSuggestions(
+  //       response.data.results.map((result) => ({
+  //         title: result.title,
+  //         posterPath: `https://image.tmdb.org/t/p/w200${result.poster_path}`,
+  //         date: result.release_date,
+  //         id: result.id, // Include movie ID in suggestions
+  //       }))
+  //     );
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  const getSuggestionValue = (suggestion) => suggestion.title;
+  // const getSuggestionValue = (suggestion) => suggestion.title;
 
-  const renderSuggestion = (suggestion) => (
-    <div
-    // Handle click on suggestion to redirect to details page
-    // onClick={() => history.push(`/details/${suggestion.id}`)}
-    >
-      <h1 className="pb-3">{suggestion.title.toUpperCase()}</h1>
-      <img
-        src={suggestion.posterPath}
-        alt="Poster"
-        className="w-16 h-16 pb-3"
-      />
-      <h1> Release Date: {suggestion.date}</h1>
-      <hr className="bg-black" />
-    </div>
-  );
+  // const renderSuggestion = (suggestion) => (
+  //   <Link to={`/details/${suggestion.id}`}>
+  //     <div
+  //     // Handle click on suggestion to redirect to details page
+  //     // onClick={() => history.push(`/details/${suggestion.id}`)}
+  //     >
+  //       <h1 className="pb-3">{suggestion.title.toUpperCase()}</h1>
 
-  const onSuggestionsFetchRequested = ({ value }) => {
-    fetchSuggestions(value);
-  };
+  //       <img
+  //         src={suggestion.posterPath}
+  //         alt="Poster"
+  //         className="w-16 h-16 pb-3"
+  //       />
 
-  const onSuggestionsClearRequested = () => {
-    setSuggestions([]);
-  };
+  //       <h1> Release Date: {suggestion.date}</h1>
+  //       <hr className="bg-black" />
+  //     </div>
+  //   </Link>
+  // );
 
-  const inputProps = {
-    placeholder: "What do you want to watch?",
-    value: searchQuery,
-    onChange: (event, { newValue }) => setSearchQuery(newValue),
-  };
+  // const onSuggestionsFetchRequested = ({ value }) => {
+  //   fetchSuggestions(value);
+  // };
+
+  // const onSuggestionsClearRequested = () => {
+  //   setSuggestions([]);
+  // };
+
+  // const inputProps = {
+  //   placeholder: "What do you want to watch?",
+  //   value: searchQuery,
+  //   onChange: (event, { newValue }) => setSearchQuery(newValue),
+  // };
 
   return (
     <>
@@ -125,8 +132,8 @@ const Header = () => {
             <h1 className="font-extrabold">MovieBlog</h1>
           </div>
 
-          <div className="search-container bg-red-400 flex-shrink basis-[60%]">
-            <Autosuggest
+          <div className="search-container bg-red-400 flex-shrink basis-[60%] flex items-center flex-col">
+            {/* <Autosuggest
               suggestions={suggestions}
               onSuggestionsFetchRequested={onSuggestionsFetchRequested}
               onSuggestionsClearRequested={onSuggestionsClearRequested}
@@ -134,7 +141,9 @@ const Header = () => {
               renderSuggestion={renderSuggestion}
               inputProps={inputProps}
               theme={styles}
-            />
+            /> */}
+            <SearchBar />
+            <SearchResultList />
           </div>
 
           <div className="right flex items-center gap-4 basis-[20%]">

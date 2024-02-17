@@ -1,4 +1,4 @@
-/* theme.module.css */
+/* theme.module.css
 *{
   padding: 0;
   margin: 0;
@@ -7,9 +7,7 @@
 
 .container {
   position: relative;
-  /* background-color: red; */
-  /* width: 100%; */
-  /* flex-basis: 10%; */
+
 
 }
 
@@ -51,10 +49,12 @@
   position: absolute;
   top: 120%;
   left: 0;
-  width: 20rem;
+  width: fit-content;
   border: 1px solid black;
   background-color: white;
-  /* z-index: 1; */
+  max-height: 300px;
+  overflow-y: scroll;
+ 
 }
 
 .suggestion {
@@ -67,4 +67,4 @@
   background-color: #ddd;
 }
 
-
+ */
