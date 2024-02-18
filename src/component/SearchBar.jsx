@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
 
-const SearchBar = () => {
+const SearchBar = ({ setResults }) => {
   const [input, setInput] = useState("");
   const [suggestions, setSuggestions] = useState([]); // Suggestions array
   const fetchSuggestions = async (value) => {
@@ -24,7 +24,7 @@ const SearchBar = () => {
         }
       );
       console.log(response.data.results);
-      setSuggestions(
+      setResults(
         response.data.results.map((result) => ({
           title: result.title,
           posterPath: `https://image.tmdb.org/t/p/w200${result.poster_path}`,
