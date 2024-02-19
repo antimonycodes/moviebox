@@ -78,13 +78,16 @@ const List = () => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 ">
           {responses.slice(0, visibleItems).map((response, index) => (
-            <div key={index} className="relative">
+            <div
+              key={index}
+              className="relative overflow-hidden group transition-transform transform hover:scale-105 duration-300 ease-in-out"
+            >
               <Link to={`/Details/${response?.id}`}>
-                <div className="  h-96 w-full bg-gray-600   rounded-[10px]">
+                <div className="h-96 w-full bg-gray-600 rounded-[10px] overflow-hidden transition-opacity group-hover:opacity-80 duration-300 ease-in-out">
                   <img
                     src={`https://image.tmdb.org/t/p/original/${response.poster_path}`}
                     alt=""
-                    className=" h-[100%] w-full object-cover object-center"
+                    className="h-[100%] w-full object-cover object-center transition-opacity group-hover:opacity-90 duration-300 ease-in-out"
                   />
                 </div>
               </Link>
