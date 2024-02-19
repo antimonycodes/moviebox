@@ -7,6 +7,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { BsCameraVideo } from "react-icons/bs";
 import { FaTv } from "react-icons/fa";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Details = () => {
   const { id } = useParams();
@@ -95,27 +96,25 @@ const Details = () => {
               <span>
                 <AiOutlineHome />
               </span>
-              <a href="" className=" ">
-                Home
-              </a>
+              <Link to="/">Home</Link>
             </li>
             <li className=" flex items-center px-8 gap-4 pb-7 text-2xl font-bold text-[#666666] hover:text-[#BE123C] hover:bg-[#F9E6EB]">
               <span>
                 <BsCameraVideo />
               </span>
-              <a href="">Movies</a>
+              <Link to="/">Movies</Link>
             </li>
             <li className=" flex items-center px-8 gap-4 pb-7 text-2xl font-bold text-[#666666] hover:text-[#BE123C] hover:bg-[#F9E6EB]">
               <span>
                 <FaTv />
               </span>
-              <a href="">Tv Series</a>
+              <Link to="/">Tv Series</Link>
             </li>
             <li className=" flex items-center px-8 gap-4 pb-7 text-2xl font-bold text-[#666666] hover:text-[#BE123C] hover:bg-[#F9E6EB]">
               <span>
                 <FaRegCalendarAlt />
               </span>
-              <a href="">Upcoming</a>
+              <Link to="/">Upcoming</Link>
             </li>
           </ul>
         </div>
