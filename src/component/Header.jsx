@@ -4,6 +4,7 @@ import { FaTimes } from "react-icons/fa";
 import { AiTwotonePlayCircle } from "react-icons/ai";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Header = () => {
   const [responses, setResponse] = useState([]);
@@ -124,40 +125,67 @@ const Header = () => {
   return (
     <>
       <div
-        className="header h-[100vh] w-full relative bg-cover bg-center px-6 lg:px-24"
+        className="header h-[100vh] w-full relative bg-cover bg-center px-2 sm:px-6 lg:px-24"
         style={{ backgroundImage: `url(${backgroundUrl})` }}
       >
         <div className="gradient-overlay absolute inset-0 bg-gradient-to-tr from-black to-transparent"></div>
 
         <nav className="py-4 flex items-center sm:gap-6 lg:gap-12 justify-between relative z-20 text-white">
-          <div className="hidden sm:flex items-center gap-2 basis-[20%]">
-            <img src="/mlogo.png" alt="logo image" className="w-16 h-16" />
-            <h1 className="font-extrabold">MovieBlog</h1>
+          <div className="flex flex-col items-center">
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img
+                src="/mlogo.png"
+                alt="logo image"
+                className="  w-8 h-8 md:w-16 md:h-16"
+              />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h1 className="font-extrabold text-red-500">
+                <AnimatePresence>
+                  {Array.from("MovieBlog").map((letter, index) => (
+                    <motion.span
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                    >
+                      {letter}
+                    </motion.span>
+                  ))}
+                </AnimatePresence>
+              </h1>
+            </motion.div>
           </div>
 
-          <div className="search-container bg-red-400 flex-shrink basis-[60%] flex items-center flex-col relative">
-            <div className="bg-white w-full h-10 rounded-2xl px-4 shadow-lg flex items-center">
+          <div className="search-container flex-shrink basis-[60%] flex items-center flex-col relative">
+            <div className="border-white border w-full h-10 rounded-2xl px-4 shadow-lg flex items-center">
               <input
                 type="search"
                 placeholder="What do you want to watch?"
                 value={input}
                 onChange={(e) => handleChange(e.target.value)}
-                className="bg-transparent border-none h-full text-xl w-full focus:outline-none text-black "
+                className="bg-transparent border-white h-full text-xl w-full focus:outline-none text-black font-semibold "
               />
             </div>
-            <div className="w-full absolute top-[100%] bg-white flex flex-col shadow-xl rounded-lg mt-2 max-h-[550px] overflow-y-scroll text-black">
+            <div className="w-full absolute top-[100%] bg-white flex flex-col shadow-xl rounded-lg mt-2 max-h-[600px] overflow-y-scroll text-black">
               {results.map((result, id) => (
                 <Link to={`/Details/${result.id}`}>
-                  <div
-                    key={id}
-                    className="flex items-center space-x-4 p-4 border-b"
-                  >
+                  <div key={id} className="flex flex-col   p-4 border-b">
                     <img
                       src={result.posterPath}
                       alt={result.title}
-                      className="w-16 h-24 object-cover"
+                      className="w-24 h-24 object-cover object-center"
                     />
-                    <div>
+                    <div className=" text-[#BE123C] font-semibold">
                       <h2 className="text-lg font-semibold">{result.title}</h2>
                       <p>Release Date: {result.date}</p>
                     </div>
@@ -167,8 +195,8 @@ const Header = () => {
             </div>
           </div>
 
-          <div className="right flex items-center gap-4 basis-[20%]">
-            <a className="font-semibold hidden lg:flex" href="#">
+          <div className="right flex items-center gap-4 basis-[20%] justify-center">
+            <a className="font-semibold hidden  lg:flex" href="#">
               Sign In
             </a>
 
