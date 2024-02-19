@@ -3,6 +3,10 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { AiOutlineHome } from "react-icons/ai";
+import { BsCameraVideo } from "react-icons/bs";
+import { FaTv } from "react-icons/fa";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 const Details = () => {
   const { id } = useParams();
@@ -84,6 +88,36 @@ const Details = () => {
         <div className="logo flex items-center gap-2">
           <img src="/mlogo.png" alt="logo image" className="w-16 h-16" />
           <h1 className=" font-extrabold">MovieBlog</h1>
+        </div>
+        <div>
+          <ul className=" mt-8 ">
+            <li className=" flex items-center px-8 gap-4 pb-7 text-2xl font-bold text-[#666666] hover:text-[#BE123C] hover:bg-[#F9E6EB]">
+              <span>
+                <AiOutlineHome />
+              </span>
+              <a href="" className=" ">
+                Home
+              </a>
+            </li>
+            <li className=" flex items-center px-8 gap-4 pb-7 text-2xl font-bold text-[#666666] hover:text-[#BE123C] hover:bg-[#F9E6EB]">
+              <span>
+                <BsCameraVideo />
+              </span>
+              <a href="">Movies</a>
+            </li>
+            <li className=" flex items-center px-8 gap-4 pb-7 text-2xl font-bold text-[#666666] hover:text-[#BE123C] hover:bg-[#F9E6EB]">
+              <span>
+                <FaTv />
+              </span>
+              <a href="">Tv Series</a>
+            </li>
+            <li className=" flex items-center px-8 gap-4 pb-7 text-2xl font-bold text-[#666666] hover:text-[#BE123C] hover:bg-[#F9E6EB]">
+              <span>
+                <FaRegCalendarAlt />
+              </span>
+              <a href="">Upcoming</a>
+            </li>
+          </ul>
         </div>
       </div>
       <div className=" basis-[100%] md:basis-[80%] mx-4 my-4">

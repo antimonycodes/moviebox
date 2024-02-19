@@ -9,12 +9,11 @@ const PopUp = ({ message }) => (
 );
 
 const List = () => {
-  // Load liked items from localStorage on component mount
-  const initialLikedItems =
-    JSON.parse(localStorage.getItem("likedItems")) || {};
   const [responses, setResponse] = useState([]);
-  const [likedItems, setLikedItems] = useState(initialLikedItems);
+  const [likedItems, setLikedItems] = useState({});
   const [popUpMessage, setPopUpMessage] = useState("");
+  const [visibleItems, setVisibleItems] = useState(16); // Initial number of items to display
+  const [seeMoreText, setSeeMoreText] = useState("See More");
 
   const ratedTv = async () => {
     try {
@@ -38,27 +37,36 @@ const List = () => {
     ratedTv();
   }, []);
 
-  // Save liked items to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem("likedItems", JSON.stringify(likedItems));
-  }, [likedItems]);
+    const initialLikedItems =
+      JSON.parse(localStorage.getItem("likedItems")) || {};
+    setLikedItems(initialLikedItems);
+  }, []);
 
   const toggleLike = (index) => {
     const updatedLikedItems = { ...likedItems };
     updatedLikedItems[index] = !likedItems[index];
     setLikedItems(updatedLikedItems);
 
-    // Set pop-up message based on like status
     setPopUpMessage(
       updatedLikedItems[index]
         ? "Added to favorites!"
         : "Removed from favorites!"
     );
 
-    // Clear pop-up after a delay (e.g., 2000 milliseconds or 2 seconds)
     setTimeout(() => {
       setPopUpMessage("");
     }, 2000);
+  };
+
+  const handleSeeMore = () => {
+    // Toggle between "See More" and "See Less" based on the current state
+    setVisibleItems((prevVisibleItems) =>
+      prevVisibleItems < responses.length ? responses.length : 16
+    );
+    setSeeMoreText((prevText) =>
+      prevText === "See More" ? "See Less" : "See More"
+    );
   };
 
   return (
@@ -66,17 +74,13 @@ const List = () => {
       <div className="z-[-2] h-[100%] w-[100%] bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px] text-white lg:px-24 px-3">
         <div className="flex items-center justify-between   py-12 ">
           <h1 className="text-2xl font-bold">Featured Movie</h1>
-          <p>See More</p>
+          <button onClick={handleSeeMore}>{seeMoreText}</button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 ">
-          {responses.map((response, index) => (
+          {responses.slice(0, visibleItems).map((response, index) => (
             <div key={index} className="relative">
               <Link to={`/Details/${response?.id}`}>
-                <div
-                  className="  h-96 w-full bg-gray-600   rounded-[10px]
-             
-          "
-                >
+                <div className="  h-96 w-full bg-gray-600   rounded-[10px]">
                   <img
                     src={`https://image.tmdb.org/t/p/original/${response.poster_path}`}
                     alt=""
@@ -87,7 +91,6 @@ const List = () => {
               <p className="py-1">{response.release_date}</p>
               <h1 className="text-1xl font-semibold">{response.title}</h1>
               <h3>{`${response.vote_average}/10`}</h3>
-
               <div className="absolute top-0 right-0 bg-[#6A8FB9] py-1 px-1 rounded-[50%] mr-1 mt-1">
                 <svg
                   stroke="currentColor"
