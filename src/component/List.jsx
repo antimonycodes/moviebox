@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+import { CircularProgress, Card, CardBody } from "@nextui-org/react";
+
 const PopUp = ({ message }) => (
   <div className="fixed top-[8px] left-1/2 transform -translate-x-1/2 bg-white p-4 rounded shadow-md z-50">
     {message}
@@ -68,6 +70,15 @@ const List = () => {
       prevText === "See More" ? "See Less" : "See More"
     );
   };
+  const getColorClass = (voteAverage) => {
+    if (voteAverage >= 7) {
+      return "stroke-green-500"; // Green for 7 and above
+    } else if (voteAverage >= 4) {
+      return "stroke-yellow-500"; // Yellow for average (4 to 6.9)
+    } else {
+      return "stroke-red-500"; // Red for below 4
+    }
+  };
 
   return (
     <>
@@ -83,7 +94,7 @@ const List = () => {
               className="relative overflow-hidden group transition-transform transform hover:scale-105 duration-300 ease-in-out"
             >
               <Link to={`/Details/${response?.id}`}>
-                <div className="h-96 w-full bg-gray-600 rounded-[10px] overflow-hidden transition-opacity group-hover:opacity-80 duration-300 ease-in-out">
+                <div className=" relative h-96 w-full bg-gray-600 rounded-[10px] overflow-hidden transition-opacity group-hover:opacity-80 duration-300 ease-in-out">
                   <img
                     src={`https://image.tmdb.org/t/p/original/${response.poster_path}`}
                     alt=""
@@ -91,9 +102,31 @@ const List = () => {
                   />
                 </div>
               </Link>
+              {response.vote_average !== null && (
+                <>
+                  <div className="absolute bottom-14">
+                    <Card className="w-[60px] h-[60px] border-none rounded-3xl bg-black">
+                      <CardBody className="justify-center items-center pb-0">
+                        <CircularProgress
+                          classNames={{
+                            svg: "w-16 h-16 drop-shadow-md",
+                            indicator: getColorClass(response.vote_average), // Apply color class for stroke
+                            track: "stroke-white/10",
+                            value: "text-xl font-semibold text-white", // Use the custom class for coloring
+                          }}
+                          value={response.vote_average * 10}
+                          strokeWidth={4}
+                          showValueLabel={true}
+                        />
+                      </CardBody>
+                    </Card>
+                  </div>
+                  {/* <h3>{`${response.vote_average}/10`}</h3> */}
+                </>
+              )}
+              <h1 className="text-1xl font-semibold ">{response.title}</h1>
               <p className="py-1">{response.release_date}</p>
-              <h1 className="text-1xl font-semibold">{response.title}</h1>
-              <h3>{`${response.vote_average}/10`}</h3>
+
               <div className="absolute top-0 right-0 bg-[#6A8FB9] py-1 px-1 rounded-[50%] mr-1 mt-1">
                 <svg
                   stroke="currentColor"

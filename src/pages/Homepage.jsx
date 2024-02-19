@@ -1,3 +1,4 @@
+import Footer from "../component/Footer";
 import Header from "../component/Header";
 import List from "../component/List";
 
@@ -6,6 +7,7 @@ const Homepage = () => {
     <>
       <Header />
       <List />
+      <Footer />
     </>
   );
 };
