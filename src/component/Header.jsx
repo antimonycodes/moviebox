@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { MdClose } from "react-icons/md";
 import { FaTimes } from "react-icons/fa";
 import { AiTwotonePlayCircle } from "react-icons/ai";
 import axios from "axios";
@@ -12,11 +13,13 @@ const Header = () => {
   const [results, setResults] = useState([]);
   const [input, setInput] = useState("");
   const [isModalOpen, setModalOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const ratedTv = async () => {
     try {
       const response = await axios.get(
         "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
+        // localStorage.setItem("ratedTV", ratedTv),
         {
           headers: {
             accept: "application/json",
@@ -128,9 +131,9 @@ const Header = () => {
         className="header h-[100vh] w-full relative bg-cover bg-center px-2 sm:px-6 lg:px-24"
         style={{ backgroundImage: `url(${backgroundUrl})` }}
       >
-        <div className="gradient-overlay absolute inset-0 bg-gradient-to-tr from-black to-transparent"></div>
+        <div className="absolute inset-0 gradient-overlay bg-gradient-to-tr from-black to-transparent"></div>
 
-        <nav className="py-4 flex items-center sm:gap-6 lg:gap-12 justify-between relative z-20 text-white">
+        <nav className="relative z-20 flex items-center justify-between py-4 text-white sm:gap-6 lg:gap-12">
           <div className="flex flex-col items-center">
             <motion.div
               initial={{ opacity: 0, y: -20 }}
@@ -140,7 +143,7 @@ const Header = () => {
               <img
                 src="/mlogo.png"
                 alt="logo image"
-                className="  w-8 h-8 md:w-16 md:h-16"
+                className="w-8 h-8 md:w-16 md:h-16"
               />
             </motion.div>
 
@@ -149,7 +152,7 @@ const Header = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <h1 className="font-extrabold text-red-500">
+              <h1 className="font-extrabold text-emerald-500">
                 <AnimatePresence>
                   {Array.from("MovieBlog").map((letter, index) => (
                     <motion.span
@@ -167,23 +170,23 @@ const Header = () => {
           </div>
 
           <div className="search-container flex-shrink basis-[60%] flex items-center flex-col relative">
-            <div className="border-white border w-full h-10 rounded-2xl px-4 shadow-lg flex items-center">
+            <div className="flex items-center w-full h-10 px-4 border border-white shadow-lg rounded-2xl">
               <input
                 type="search"
                 placeholder="What do you want to watch?"
                 value={input}
                 onChange={(e) => handleChange(e.target.value)}
-                className="bg-transparent border-white h-full text-xl w-full focus:outline-none text-black font-semibold "
+                className="w-full h-full text-xl font-semibold text-black bg-transparent border-white focus:outline-none "
               />
             </div>
             <div className="w-full absolute top-[100%] bg-white flex flex-col shadow-xl rounded-lg mt-2 max-h-[600px] overflow-y-scroll text-black">
               {results.map((result, id) => (
-                <Link to={`/Details/${result.id}`}>
-                  <div key={id} className="flex flex-col   p-4 border-b">
+                <Link key={id} to={`/Details/${result.id}`}>
+                  <div className="flex flex-col p-4 border-b">
                     <img
                       src={result.posterPath}
                       alt={result.title}
-                      className="w-24 h-24 object-cover object-center"
+                      className="object-cover object-center w-24 h-24"
                     />
                     <div className=" text-[#BE123C] font-semibold">
                       <h2 className="text-lg font-semibold">{result.title}</h2>
@@ -196,18 +199,25 @@ const Header = () => {
           </div>
 
           <div className="right flex items-center gap-4 basis-[20%] justify-center">
-            <a className="font-semibold hidden  lg:flex" href="#">
+            <a className="hidden font-semibold lg:flex" href="#">
               Sign In
             </a>
 
-            <div className="bg-red-700 w-8 h-8 flex items-center justify-center rounded-full">
-              <RxHamburgerMenu />
+            <div
+              className="flex items-center justify-center w-8 h-8 transition-all duration-1000 bg-red-700 rounded"
+              onClick={() => setMenuOpen((prev) => !prev)}
+            >
+              {menuOpen ? (
+                <MdClose className="w-full text-2xl font-extrabold" />
+              ) : (
+                <RxHamburgerMenu className="w-full text-2xl font-extrabold" />
+              )}
             </div>
           </div>
         </nav>
 
         <div className="py-28 w-full sm:w-[30rem] text-white relative z-10">
-          <h1 className="text-3xl font-bold pb-2">{title}</h1>
+          <h1 className="pb-2 text-3xl font-bold">{title}</h1>
           <h2 className="pb-2">{`${voteAverage}/10`}</h2>
           <p className="pb-2">{overview}</p>
           <div
@@ -222,7 +232,7 @@ const Header = () => {
           {isModalOpen &&
             responses[randomIndex]?.videos &&
             responses[randomIndex]?.videos.length > 0 && (
-              <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
                 {responses[randomIndex].videos
                   .filter((video) => video.type === "Trailer" && video.official)
                   .slice(0, 1) // Display only the first official trailer
@@ -240,7 +250,7 @@ const Header = () => {
                         className="absolute top-[25%] right-[29%] text-white"
                         onClick={closeModal}
                       >
-                        <FaTimes className=" text-red-700 text-4xl" />
+                        <FaTimes className="text-4xl text-red-700 " />
                       </button>
                     </div>
                   ))}
