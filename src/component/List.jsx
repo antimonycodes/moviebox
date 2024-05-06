@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 import { CircularProgress, Card, CardBody } from "@nextui-org/react";
+import { render } from "react-dom";
+import { Circles } from "react-loader-spinner";
 
 const PopUp = ({ message }) => (
   <div className="fixed top-[8px] left-1/2 transform -translate-x-1/2 bg-white p-4 rounded shadow-md z-50">
@@ -16,9 +18,11 @@ const List = () => {
   const [popUpMessage, setPopUpMessage] = useState("");
   const [visibleItems, setVisibleItems] = useState(16); // Initial number of items to display
   const [seeMoreText, setSeeMoreText] = useState("See More");
+  const [loading, setLoading] = useState(false);
 
   const ratedTv = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(
         "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
         {
@@ -33,6 +37,7 @@ const List = () => {
     } catch (error) {
       console.error(error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -61,6 +66,18 @@ const List = () => {
     }, 2000);
   };
 
+  render(
+    <Circles
+      height="80"
+      width="80"
+      color="#4fa94d"
+      ariaLabel="circles-loading"
+      wrapperStyle={{}}
+      wrapperClass=""
+      visible={true}
+    />
+  );
+
   const handleSeeMore = () => {
     // Toggle between "See More" and "See Less" based on the current state
     setVisibleItems((prevVisibleItems) =>
@@ -82,6 +99,7 @@ const List = () => {
 
   return (
     <>
+      {loading ? Circles : null}
       <div className="z-[-2] h-[100%] w-[100%] bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px] text-white lg:px-24 px-3">
         <div className="flex items-center justify-between   py-12 ">
           <h1 className="text-2xl font-bold">Featured Movie</h1>
