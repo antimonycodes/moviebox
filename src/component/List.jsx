@@ -3,8 +3,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 import { CircularProgress, Card, CardBody } from "@nextui-org/react";
-import { render } from "react-dom";
-import { Circles } from "react-loader-spinner";
+// import { render } from "react-dom";
+// import { Circles } from "react-loader-spinner";
 
 const PopUp = ({ message }) => (
   <div className="fixed top-[8px] left-1/2 transform -translate-x-1/2 bg-white p-4 rounded shadow-md z-50">
@@ -16,11 +16,13 @@ const List = () => {
   const [responses, setResponse] = useState([]);
   const [likedItems, setLikedItems] = useState({});
   const [popUpMessage, setPopUpMessage] = useState("");
-  const [visibleItems, setVisibleItems] = useState(16); // Initial number of items to display
+  const [visibleItems, setVisibleItems] = useState(16);
   const [seeMoreText, setSeeMoreText] = useState("See More");
   const [loading, setLoading] = useState(false);
 
   const ratedTv = async () => {
+    const bearerKey = import.meta.env.VITE_APP_BEARER_KEY;
+
     try {
       setLoading(true);
       const response = await axios.get(
@@ -28,8 +30,7 @@ const List = () => {
         {
           headers: {
             accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MTU5MTFlYmE5NmNlZmQyMGJjYmIyODFmMjRmNWE1YiIsInN1YiI6IjY1YmE0NWYwYjdkMzUyMDE4MDIyMTU3YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.59z62Zyer3M6lHut_eJjubi1wLNVm7rroHQ_fRuR8_s",
+            Authorization: `${bearerKey}`,
           },
         }
       );
@@ -66,17 +67,17 @@ const List = () => {
     }, 2000);
   };
 
-  render(
-    <Circles
-      height="80"
-      width="80"
-      color="#4fa94d"
-      ariaLabel="circles-loading"
-      wrapperStyle={{}}
-      wrapperClass=""
-      visible={true}
-    />
-  );
+  // render(
+  //   <Circles
+  //     height="80"
+  //     width="80"
+  //     color="#4fa94d"
+  //     ariaLabel="circles-loading"
+  //     wrapperStyle={{}}
+  //     wrapperClass=""
+  //     visible={true}
+  //   />
+  // );
 
   const handleSeeMore = () => {
     // Toggle between "See More" and "See Less" based on the current state
@@ -99,7 +100,7 @@ const List = () => {
 
   return (
     <>
-      {loading ? Circles : null}
+      {/* {loading ? Circles : null} */}
       <div className="z-[-2] h-[100%] w-[100%] bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px] text-white lg:px-24 px-3">
         <div className="flex items-center justify-between   py-12 ">
           <h1 className="text-2xl font-bold">Featured Movie</h1>

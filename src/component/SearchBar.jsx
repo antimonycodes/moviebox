@@ -29,7 +29,7 @@ const SearchBar = ({ setResults }) => {
           title: result.title,
           posterPath: `https://image.tmdb.org/t/p/w200${result.poster_path}`,
           date: result.release_date,
-          id: result.id, // Include movie ID in suggestions
+          id: result.id,
         }))
       );
     } catch (error) {

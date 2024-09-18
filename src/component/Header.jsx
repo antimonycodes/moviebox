@@ -14,21 +14,21 @@ const Header = () => {
   const [input, setInput] = useState("");
   const [isModalOpen, setModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const bearerKey = import.meta.env.VITE_APP_BEARER_KEY;
+  const baseURL = import.meta.env.VITE_APP_BASE_URL;
 
   const ratedTv = async () => {
+    // const baseURL = import.meta.env.VITE_APP_BASE_URL;
     try {
-      const response = await axios.get(
-        "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
-        // localStorage.setItem("ratedTV", ratedTv),
-        {
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MTU5MTFlYmE5NmNlZmQyMGJjYmIyODFmMjRmNWE1YiIsInN1YiI6IjY1YmE0NWYwYjdkMzUyMDE4MDIyMTU3YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.59z62Zyer3M6lHut_eJjubi1wLNVm7rroHQ_fRuR8_s",
-          },
-        }
-      );
-
+      const endpoint = "/movie/upcoming?language=en-US&page=1";
+      const url = `${baseURL}${endpoint}`;
+      console.log(url);
+      const response = await axios.get(`${url}`, {
+        headers: {
+          accept: "application/json",
+          Authorization: `${bearerKey}`,
+        },
+      });
       const movies = response.data.results;
 
       // Fetch videos for each movie
